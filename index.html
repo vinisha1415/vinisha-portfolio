@@ -1,52 +1,646 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Places I've Called Home</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinisha Vittal Bangera | QA Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0e1117;
+            --surface: #161b22;
+            --surface-hover: #1c2230;
+            --border: #2a3140;
+            --text: #e6edf3;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;
+            --accent-glow: rgba(88, 166, 255, 0.15);
+            --green: #3fb950;
+            --green-glow: rgba(63, 185, 80, 0.12);
+            --coral: #f78166;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Subtle grid background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image:
+                linear-gradient(rgba(88, 166, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(88, 166, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* NAV */
+        nav {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: rgba(14, 17, 23, 0.9);
+            backdrop-filter: blur(12px);
+            z-index: 100;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--accent);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links { display: flex; gap: 28px; list-style: none; }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--accent); }
+
+        /* HERO */
+        .hero {
+            padding: 80px 0 60px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-label {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--green);
+            background: var(--green-glow);
+            padding: 6px 14px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            line-height: 1.15;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        h1 .highlight {
+            color: var(--accent);
+        }
+
+        .hero-sub {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 620px;
+            margin-bottom: 28px;
+        }
+
+        .hero-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        .btn-primary:hover {
+            background: #79bbff;
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--border);
+            color: var(--text);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 60px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            margin-bottom: 36px;
+            font-size: 0.95rem;
+        }
+
+        /* SKILLS */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .skill-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px;
+            transition: all 0.25s;
+        }
+
+        .skill-card:hover {
+            border-color: var(--accent);
+            background: var(--surface-hover);
+            transform: translateY(-2px);
+        }
+
+        .skill-card-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tag {
+            font-size: 0.78rem;
+            padding: 4px 10px;
+            background: rgba(88, 166, 255, 0.08);
+            border: 1px solid rgba(88, 166, 255, 0.15);
+            border-radius: 5px;
+            color: var(--text-muted);
+        }
+
+        .tag.learning {
+            border-color: rgba(63, 185, 80, 0.3);
+            background: var(--green-glow);
+            color: var(--green);
+        }
+
+        /* EXPERIENCE */
+        .timeline { position: relative; }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 32px;
+            margin-bottom: 36px;
+        }
+
+        .timeline-item:last-child { margin-bottom: 0; }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid var(--bg);
+        }
+
+        .timeline-item.break::before {
+            background: var(--green);
+        }
+
+        .timeline-role {
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .timeline-company {
+            color: var(--accent);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .timeline-date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .timeline-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* PROJECTS */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .project-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px;
+            transition: all 0.25s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .project-name {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .project-name .arrow {
+            color: var(--accent);
+            transition: transform 0.2s;
+        }
+
+        .project-card:hover .arrow { transform: translateX(4px); }
+
+        .project-desc {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin-bottom: 14px;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        /* DOMAIN */
+        .domain-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .domain-badge {
+            padding: 10px 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+
+        .domain-badge:hover {
+            border-color: var(--accent);
+            color: var(--text);
+        }
+
+        /* CONTACT */
+        .contact-grid {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px 28px;
+            text-decoration: none;
+            color: var(--text);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .contact-icon {
+            font-size: 1.2rem;
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 32px 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero, section {
+            animation: fadeUp 0.6s ease-out;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 640px) {
+            h1 { font-size: 2rem; }
+            .hero { padding: 50px 0 40px; }
+            section { padding: 40px 0; }
+            .nav-links { gap: 16px; }
+            .nav-links a { font-size: 0.8rem; }
+            .skills-grid, .projects-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
 
-  <header>
-    <h1>Places I've Called Home</h1>
-    <p class="subtitle">A journey across cities, cultures, and chapters.</p>
-  </header>
-
-  <main class="timeline">
-
-    <div class="stop">
-      <div class="dot"></div>
-      <div class="card">
-        <span class="emoji">🇮🇳</span>
-        <h2>India</h2>
-        <p class="memory">Where the story began. The smells of home cooking, monsoon rains, and the warmth of family that never really leaves you.</p>
-      </div>
+<nav>
+    <div class="container">
+        <div class="logo">VB</div>
+        <ul class="nav-links">
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
     </div>
+</nav>
 
-    <div class="stop">
-      <div class="dot"></div>
-      <div class="card">
-        <span class="emoji">🤠</span>
-        <h2>Austin, TX</h2>
-        <p class="memory">Live music on every corner, breakfast tacos for every mood, and a city that keeps growing as fast as my career.</p>
-      </div>
+<div class="container">
+
+    <section class="hero">
+        <div class="hero-label">Open to Opportunities</div>
+        <h1>Vinisha Vittal <span class="highlight">Bangera</span></h1>
+        <p class="hero-sub">QA Engineer with 6+ years of experience across manual, automation, API, and mainframe testing. Specializing in healthcare insurance systems with a rare hybrid of legacy and modern QA skills.</p>
+        <div class="hero-links">
+            <a href="https://github.com/vinisha1415" target="_blank" class="btn btn-primary">&#9679; GitHub</a>
+            <a href="https://www.linkedin.com/in/vinisha-vittal-bangera" target="_blank" class="btn btn-outline">LinkedIn</a>
+            <a href="mailto:vinisha.mite@gmail.com" class="btn btn-outline">Get in Touch</a>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2 class="section-title">Technical Skills</h2>
+        <p class="section-subtitle">The tools and technologies I work with every day.</p>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-card-title">Testing</div>
+                <div class="skill-tags">
+                    <span class="tag">Manual Functional</span>
+                    <span class="tag">Regression</span>
+                    <span class="tag">API Testing</span>
+                    <span class="tag">Integration</span>
+                    <span class="tag">UAT</span>
+                    <span class="tag">Database Testing</span>
+                </div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-card-title">Automation</div>
+                <div class="skill-tags">
+                    <span class="tag">Selenium WebDriver</span>
+                    <span class="tag">Python / PyTest</span>
+                    <span class="tag">Page Object Model</span>
+                    <span class="tag learning">Playwright (learning)</span>
+                </div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-card-title">API & Tools</div>
+                <div class="skill-tags">
+                    <span class="tag">Postman</span>
+                    <span class="tag">Newman</span>
+                    <span class="tag">SoapUI</span>
+                    <span class="tag">Swagger</span>
+                    <span class="tag">Splunk</span>
+                </div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-card-title">Test Management</div>
+                <div class="skill-tags">
+                    <span class="tag">Azure DevOps</span>
+                    <span class="tag">Azure Test Plans</span>
+                    <span class="tag">Jira</span>
+                    <span class="tag">QTest</span>
+                    <span class="tag">Git</span>
+                </div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-card-title">Databases</div>
+                <div class="skill-tags">
+                    <span class="tag">SQL</span>
+                    <span class="tag">Azure Cosmos DB</span>
+                    <span class="tag">MySQL</span>
+                    <span class="tag">DB2</span>
+                    <span class="tag">IMS DB</span>
+                </div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-card-title">Mainframe</div>
+                <div class="skill-tags">
+                    <span class="tag">COBOL</span>
+                    <span class="tag">JCL</span>
+                    <span class="tag">CICS</span>
+                    <span class="tag">TSO/ISPF</span>
+                    <span class="tag">Control-M</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <h2 class="section-title">Experience</h2>
+        <p class="section-subtitle">6+ years across healthcare, insurance, and financial services.</p>
+        <div class="timeline">
+            <div class="timeline-item break">
+                <div class="timeline-role">Career Development</div>
+                <div class="timeline-company">Upskilling & Portfolio Building</div>
+                <div class="timeline-date">March 2024 – Present</div>
+                <div class="timeline-desc">Planned parental leave with active upskilling in Python/PyTest, Playwright, API automation with Newman, and AI-augmented QA practices. Building portfolio projects and contributing to GitHub.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-role">QA Analyst II</div>
+                <div class="timeline-company">Astrana Health</div>
+                <div class="timeline-date">Nov 2022 – March 2024</div>
+                <div class="timeline-desc">Led end-to-end testing for Provider Portal and Authorization Management. Built and maintained Selenium WebDriver framework (Python/PyTest/POM), automating 150+ test cases and reducing manual effort by ~40%. Designed API automation suites with Postman and integrated tests into Azure DevOps CI/CD pipelines.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-role">Software Test Engineer</div>
+                <div class="timeline-company">Legato (Client: Anthem)</div>
+                <div class="timeline-date">Jan 2020 – June 2022</div>
+                <div class="timeline-desc">Performed API testing using Postman and SoapUI for healthcare services across Provider, Member, and Claims modules. Executed backend database testing on IMS DB and DB2. Validated healthcare EDI transactions and developed deep domain expertise in healthcare insurance.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-role">Software Test Engineer</div>
+                <div class="timeline-company">UST Global (Client: Anthem)</div>
+                <div class="timeline-date">July 2018 – Dec 2019</div>
+                <div class="timeline-desc">Mainframe testing of batch jobs — JCL, COBOL, DB2, and IMS DB — for benefits and claims processing. Created and executed regression test cases on CICS screens for Claims, Benefits, and Member modules.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-role">Software Engineer</div>
+                <div class="timeline-company">Collabera (Client: Amex)</div>
+                <div class="timeline-date">Oct 2017 – May 2018</div>
+                <div class="timeline-desc">Production support and batch job monitoring using Control-M. Analyzed job failures, performed root cause analysis, and resolved production incidents in compliance with SLA.</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2 class="section-title">Projects</h2>
+        <p class="section-subtitle">Hands-on work that demonstrates real skills.</p>
+        <div class="projects-grid">
+            <a href="https://github.com/vinisha1415/python-qa-roadmap" target="_blank" class="project-card">
+                <div class="project-name">Python QA Roadmap <span class="arrow">→</span></div>
+                <div class="project-desc">Structured learning path covering PyTest fundamentals, Playwright browser automation, and API testing with requests. Includes real test suites against live applications.</div>
+                <div class="project-tech">
+                    <span class="tag">Python</span>
+                    <span class="tag">PyTest</span>
+                    <span class="tag">Playwright</span>
+                    <span class="tag">API Testing</span>
+                </div>
+            </a>
+            <a href="https://github.com/vinisha1415" target="_blank" class="project-card">
+                <div class="project-name">Newman API Automation <span class="arrow">→</span></div>
+                <div class="project-desc">API test automation project using Postman collections executed via Newman CLI with HTML reporting. Tests CRUD operations against RESTful endpoints with CI integration.</div>
+                <div class="project-tech">
+                    <span class="tag">Postman</span>
+                    <span class="tag">Newman</span>
+                    <span class="tag">Node.js</span>
+                    <span class="tag">CI/CD</span>
+                </div>
+            </a>
+            <a href="https://github.com/vinisha1415/python-qa-roadmap/tree/master/tests/api" target="_blank" class="project-card">
+                <div class="project-name">API CRUD Test Suite <span class="arrow">→</span></div>
+                <div class="project-desc">Comprehensive API testing with Python requests and PyTest. Covers GET, POST, PUT, DELETE operations with fixtures, parameterized tests, and query parameter validation.</div>
+                <div class="project-tech">
+                    <span class="tag">Python</span>
+                    <span class="tag">requests</span>
+                    <span class="tag">PyTest</span>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="section-title">Domain Expertise</h2>
+        <p class="section-subtitle">Deep experience in regulated, high-stakes industries.</p>
+        <div class="domain-badges">
+            <div class="domain-badge">Healthcare Insurance</div>
+            <div class="domain-badge">Claims Processing</div>
+            <div class="domain-badge">Member & Provider Systems</div>
+            <div class="domain-badge">EDI Transactions</div>
+            <div class="domain-badge">HIPAA Compliance</div>
+            <div class="domain-badge">BFSI</div>
+            <div class="domain-badge">Mainframe Legacy Systems</div>
+            <div class="domain-badge">SaaS Applications</div>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="section-title">Certification</h2>
+        <p class="section-subtitle"></p>
+        <div class="domain-badges">
+            <div class="domain-badge">AHIP – Professional Academy for Healthcare Management</div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2 class="section-title">Let's Connect</h2>
+        <p class="section-subtitle">Currently open to QA Engineer, QA Analyst, and SDET opportunities.</p>
+        <div class="contact-grid">
+            <a href="mailto:vinisha.mite@gmail.com" class="contact-item">
+                <span class="contact-icon">✉</span> vinisha.mite@gmail.com
+            </a>
+            <a href="https://github.com/vinisha1415" target="_blank" class="contact-item">
+                <span class="contact-icon">⬡</span> GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/vinisha-vittal-bangera" target="_blank" class="contact-item">
+                <span class="contact-icon">◆</span> LinkedIn
+            </a>
+            <a href="tel:7373281067" class="contact-item">
+                <span class="contact-icon">☎</span> 737-328-1067
+            </a>
+        </div>
+    </section>
+
+</div>
+
+<footer>
+    <div class="container">
+        © 2026 Vinisha Vittal Bangera · Built with purpose and persistence
     </div>
-
-    <div class="stop future">
-      <div class="dot"></div>
-      <div class="card">
-        <span class="emoji">🔮</span>
-        <h2>Next Chapter</h2>
-        <p class="memory">Still writing this one. Wherever it leads — new city, new role, new adventure — I'll find a way to make it home.</p>
-      </div>
-    </div>
-
-  </main>
-
-  <footer>
-    <p>Made with curiosity and a little bit of wanderlust ✨</p>
-  </footer>
+</footer>
 
 </body>
 </html>
